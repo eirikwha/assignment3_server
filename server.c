@@ -65,7 +65,9 @@ int main(int argc, char* argv[]) {
         }
     i++;
     printf("Letter: %c \n", *letter);
-    printf("Current full name: %s \n", buffer);
+    printf("Current name: %s \n", buffer);
+
+
     }
 
     printf("Here is the message: %s\n", buffer);
@@ -73,11 +75,26 @@ int main(int argc, char* argv[]) {
 // .................
 
 
-    n = write(newsockfd, "I got your message", 18);
+    //n = write(newsockfd, "I got your message", 18);
+    char buffer2 [256] = "dhqhj";
+    n = write(newsockfd,buffer2 , 18);
 
     if (n < 0) {
         error("ERROR writing to socket");
     }
 
+    bzero(buffer, 256);
+    while (1) {
+        n = read(newsockfd, letter, 1);
+        if (n < 0) {
+            error("ERROR reading from socket");
+        }
+        buffer[i] = *letter;
+        if (*letter == '\n'){
+            break;
+        }
+        i++;
+        printf("Letter: %c \n", *letter);
+    }
     return 0;
 }
